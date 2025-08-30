@@ -1,9 +1,26 @@
-name: GitHub Actions Test
+name: Tests
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
-  echo_hello_world:
+  pytest:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "hello world!!"
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run pytest
+        run: uv run pytest -q
