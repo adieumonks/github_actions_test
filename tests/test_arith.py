@@ -1,6 +1,6 @@
 import pytest
 
-from utils.arith import add
+from github_actions_test.arith import add
 
 
 @pytest.mark.parametrize(
